@@ -27,7 +27,6 @@ struct SnakePart {
 // snake
 class Snake
 {
-private:
 	std::list<SnakePart> parts;
 	bool isCollision;
 
@@ -40,10 +39,9 @@ public:
 	void setDirection(Direction direction);
 	
 	SnakePart getNextHead();
+	
 	bool getIsCollision();
+	bool isAt(Coordinate coordinate);
 
 	const std::list<SnakePart>& getParts();
-
-private:
-	void calculateCollision();
 };

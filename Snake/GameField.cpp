@@ -88,17 +88,10 @@ void GameField::placeAppleOnTable()
 	bool found = false;
 	while (!found)
 	{
-		srand(time(NULL));
+		srand((unsigned int)time(NULL));
 		appleCoordinate.x = rand() % (table.getWidth() - 2) + 1;
 		appleCoordinate.y = rand() % (table.getHeight() - 2) + 1;
-		found = true;
-		for (list<SnakePart>::const_iterator it = snake.getParts().begin(); it != snake.getParts().end(); ++it)
-		{
-			if (appleCoordinate.x == it->place.x && appleCoordinate.y == it->place.y)
-			{
-				found = false;
-			}
-		}
+		found = !snake.isAt(appleCoordinate);
 	}
 
 	table.setApplePlace(appleCoordinate);
@@ -155,7 +148,9 @@ void GameField::renderSnake()
 
 void GameField::renderApple()
 {
+	setConsoleColour(3);
 	writeToPosition(table.getApplePlace().x, table.getApplePlace().y, 'x');
+	setConsoleColour(7);
 }
 
 void GameField::renderGameOver()

@@ -24,7 +24,7 @@ Coordinate Snake::move()
 	SnakePart oldTail = parts.back();
 	parts.pop_back();
 
-	calculateCollision();
+	isCollision = isAt(parts.front().place);
 
 	return oldTail.place;
 }
@@ -73,17 +73,20 @@ bool Snake::getIsCollision()
 	return isCollision;
 }
 
+bool Snake::isAt(Coordinate coordinate)
+{
+	std::list<SnakePart>::const_iterator it = getParts().begin();
+	for (++it; it != getParts().end() && !isCollision; it++) {
+		if (it->place.x == coordinate.x && it->place.y == coordinate.y)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 const std::list<SnakePart>& Snake::getParts()
 {
 	return parts;
-}
-
-void Snake::calculateCollision()
-{
-	Coordinate head = parts.front().place;
-
-	std::list<SnakePart>::const_iterator it = getParts().begin();
-	for (++it; it != getParts().end() && !isCollision; it++) {
-		isCollision = it->place.x == head.x && it->place.y == head.y;
-	}
 }
