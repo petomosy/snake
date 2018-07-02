@@ -19,12 +19,13 @@ void Snake::eat()
 
 Coordinate Snake::move()
 {
-	parts.push_front(getNextHead());
+	SnakePart nextHead = getNextHead();
+	isCollision = isAt(nextHead.place);
+
+	parts.push_front(nextHead);
 	
 	SnakePart oldTail = parts.back();
 	parts.pop_back();
-
-	isCollision = isAt(parts.front().place);
 
 	return oldTail.place;
 }
@@ -75,8 +76,7 @@ bool Snake::getIsCollision()
 
 bool Snake::isAt(Coordinate coordinate)
 {
-	std::list<SnakePart>::const_iterator it = getParts().begin();
-	for (++it; it != getParts().end() && !isCollision; it++) {
+	for (std::list<SnakePart>::const_iterator it = getParts().begin(); it != getParts().end() && !isCollision; it++) {
 		if (it->place.x == coordinate.x && it->place.y == coordinate.y)
 		{
 			return true;
