@@ -68,6 +68,7 @@ void GameField::render()
 		renderTable();
 		renderPoints();
 		renderApple();
+		setCursorPosition(table.getWidth(), table.getHeight());
 	}
 	else
 	{
